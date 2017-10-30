@@ -1,0 +1,57 @@
+.body-bg {
+  // background-color: #e0ecff;
+  background-color: #b6c2d6;
+}
+.pt-40 {
+  padding-top: 40px;
+}
+.center {
+  margin: auto;
+}
+.text-center {
+  text-align: center;
+}
+.mine-grid {
+  height: 40vw;
+  width: 40vw;
+  border-color: #828282;
+  background-color: #474747;
+  border-width: 2px;
+  border-style: solid;
+  box-sizing: content-box;
+}
+
+.mine-cell {
+  background-image: url("images/mineTile.png");
+}
+
+.mine-cell:hover {
+  background-image: url("images/mineTileHighlight.png");
+}
+
+.mine {
+  background-image: url("images/mine.png");
+}
+
+.mine-cell-empty {
+  background-image: url("images/mineTileEmpty.png");
+}
+
+.mine-explode {
+  background-image: url("images/mineExplode.png");
+}
+
+.cell-5 {
+  height: 5vw;
+  width: 5vw;
+  box-sizing: border-box;
+  display: table-cell;
+  background-size: 100%;
+  vertical-align: middle;
+}
+
+.mine-count {
+  font-size: 25pt;
+  font-family: sans-serif;
+  color: #c4c4c4;
+}
