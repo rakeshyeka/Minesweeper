@@ -8,10 +8,13 @@ function MineFieldManager() {
 }
 
 MineFieldManager.prototype.initGrid = function () {
-  for (var i=0; i < this.gridX; i++) {
-    var row = [];
-    for (var j=0; j < this.gridY; j++) {
-      var cell = new MineCell(i, j);
+  for (let i=0; i < this.gridX; i++) {
+    let row = [];
+    for (let j=0; j < this.gridY; j++) {
+      let cell = new MineCell(i, j);
+      cell.domElement.addEventListener('click', function(){
+        cascadeTap(this, i, j);
+      }.bind(this));
       row.push(cell);
     }
     this.grid.push(row);
@@ -47,6 +50,30 @@ MineFieldManager.prototype.showField = function(force) {
   for (var i=0; i < this.gridX; i++) {
     for (var j=0; j< this.gridY; j++) {
       this.grid[i][j].paintMine(force);
+    }
+  }
+}
+
+var cascadeTap = function(mineField, x, y) {
+  var mineCell = mineField.grid[x][y];
+  if (mineCell.isTapped) {
+    return;
+  }
+
+  mineCell.isTapped = true;
+  mineCell.paintMine();
+
+  if (mineCell.isMine || mineCell.minesAround > 0) {
+    return;
+  } else {
+    for (let i=-1; i < 2; i++) {
+      for (let j=-1; j < 2; j++) {
+        let p = x + i;
+        let q = y + j;
+        if (p >= 0  && p < mineField.gridX && q >= 0 && q < mineField.gridY) {
+          cascadeTap(mineField, p, q);
+        }
+      }
     }
   }
 }

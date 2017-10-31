@@ -6,16 +6,6 @@ function MineCell(x, y) {
   this.isTapped = false;
   this.domElement = document.createElement("div");
   this.paintMine();
-  this.domElement.addEventListener('click', this.onClickFunc.bind(this));
-}
-
-MineCell.prototype.onClickFunc = function() {
-  if (this.isTapped) {
-    return;
-  }
-
-  this.isTapped = true;
-  this.paintMine();
 }
 
 MineCell.prototype.paintMine = function(force) {

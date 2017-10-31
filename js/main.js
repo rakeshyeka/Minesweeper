@@ -4,5 +4,4 @@ window.onload = function(e){
   var myGame = new MineFieldManager();
   myGame.bootStrapGridToCanvas(mineGrid);
   myGame.setMines();
-  myGame.showField();
 };
