@@ -41,6 +41,10 @@
   background-image: url("images/mineExplode.png");
 }
 
+.flag {
+  background-image: url("images/flag.png");
+}
+
 .cell-5 {
   height: 5vw;
   width: 5vw;

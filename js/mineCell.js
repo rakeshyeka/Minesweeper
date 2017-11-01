@@ -4,17 +4,20 @@ function MineCell(x, y) {
   this.minesAround = 0;
   this.isMine = false;
   this.isTapped = false;
+  this.isFlag = false;
   this.domElement = document.createElement("div");
   this.paintMine();
 }
 
 MineCell.prototype.paintMine = function(force) {
-  if (!this.isTapped) {
-    this.domElement.className = "mine-cell cell-5";
+  if (this.isFlag) {
+    this.domElement.className = "flag";
+  } else if (!this.isTapped) {
+    this.domElement.className = "mine-cell";
   } else if (this.isMine) {
-    this.domElement.className = "mine-explode cell-5";
+    this.domElement.className = "mine-explode";
   } else {
-    this.domElement.className = "mine-cell-empty cell-5";
+    this.domElement.className = "mine-cell-empty";
     if (this.minesAround > 0) {
       var textNode = document.createElement("p");
       textNode.appendChild(document.createTextNode(this.minesAround));
@@ -24,6 +27,8 @@ MineCell.prototype.paintMine = function(force) {
   }
 
   if (force && !this.isTapped && this.isMine) {
-    this.domElement.className = "mine cell-5";
+    this.domElement.className = "mine";
   }
+  
+  this.domElement.className += " cell-5";
 }
