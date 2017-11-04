@@ -1,9 +1,11 @@
-function MineFieldManager() {
+function MineFieldManager(inputManager) {
   this.gridX = 8;
   this.gridY = 8;
   this.mineCount = 10;
   this.flags = 0;
+  this.tappedCells = 0;
   this.grid = [];
+  this.inputManager = inputManager;
 
   this.initGrid();
 }
@@ -14,11 +16,11 @@ MineFieldManager.prototype.initGrid = function () {
     for (let j=0; j < this.gridY; j++) {
       let cell = new MineCell(i, j);
       cell.domElement.addEventListener('click', function(){
-        cascadeTap(this, i, j);
+        this.inputManager.cascadeTap(this, i, j);
       }.bind(this));
       cell.domElement.addEventListener('contextmenu', function(ev){
         ev.preventDefault();
-        plantFlag(this, i, j);
+        this.inputManager.plantFlag(this, i, j);
         return false;
       }.bind(this));
       row.push(cell);
@@ -47,7 +49,7 @@ MineFieldManager.prototype.setMines = function() {
     if (!this.grid[x][y].isMine) {
       i++;
       this.grid[x][y].isMine = true;
-      updateMinesAround(x, y, this);
+      updateMinesAround(this, x, y);
     }
   }
 }
@@ -60,46 +62,7 @@ MineFieldManager.prototype.showField = function(force) {
   }
 }
 
-var plantFlag = function(mineField, x, y) {
-  var mineCell = mineField.grid[x][y];
-  if (mineCell.isTapped) {
-    return;
-  }
-
-  mineCell.isFlag = !mineCell.isFlag;
-  if (mineCell.isFlag) {
-    mineField.flags++;
-  } else {
-    mineField.flags--;
-  }
-  mineCell.paintMine();
-}
-
-var cascadeTap = function(mineField, x, y) {
-  var mineCell = mineField.grid[x][y];
-  if (mineCell.isTapped || mineCell.isFlag) {
-    return;
-  }
-
-  mineCell.isTapped = true;
-  mineCell.paintMine();
-
-  if (mineCell.isMine || mineCell.minesAround > 0) {
-    return;
-  } else {
-    for (let i=-1; i < 2; i++) {
-      for (let j=-1; j < 2; j++) {
-        let p = x + i;
-        let q = y + j;
-        if (p >= 0  && p < mineField.gridX && q >= 0 && q < mineField.gridY) {
-          cascadeTap(mineField, p, q);
-        }
-      }
-    }
-  }
-}
-
-var updateMinesAround = function(x, y, mineField) {
+var updateMinesAround = function(mineField, x, y) {
   for (var i=-1; i < 2; i++) {
     for (var j=-1; j < 2; j++) {
       var row = x + i;
