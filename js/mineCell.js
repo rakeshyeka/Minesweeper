@@ -16,7 +16,7 @@ MineCell.prototype.paintMine = function(force) {
     this.domElement.className = "mine-cell";
   } else if (this.isMine) {
     this.domElement.className = "mine-explode";
-  } else {
+  } else if (!force){
     this.domElement.className = "mine-cell-empty";
     if (this.minesAround > 0) {
       var textNode = document.createElement("p");
@@ -26,9 +26,9 @@ MineCell.prototype.paintMine = function(force) {
     }
   }
 
-  if (force && !this.isTapped && this.isMine) {
+  if (force && !this.isTapped && !this.isFlag && this.isMine) {
     this.domElement.className = "mine";
   }
-  
+
   this.domElement.className += " cell-5";
 }

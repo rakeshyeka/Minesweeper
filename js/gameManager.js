@@ -7,7 +7,6 @@ function GameManager() {
 
 GameManager.prototype.isGameOver = function(mineField) {
   if (this.gameOver) {
-    this.showGameState("Game Over!");
     return true;
   }
 

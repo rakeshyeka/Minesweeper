@@ -39,6 +39,7 @@ InputManager.prototype.cascadeTap = function(mineField, x, y) {
 
   if (mineCell.isMine) {
     this.gameManager.changeGameState(lose = true);
+    mineField.showField(force=true);
     return;
   } else if ( mineCell.minesAround > 0) {
     this.gameManager.isGameOver(mineField);
